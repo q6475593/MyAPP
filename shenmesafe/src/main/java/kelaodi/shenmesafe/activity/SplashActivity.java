@@ -35,7 +35,7 @@ import kelaodi.shenmesafe.engine.UpdateInfoParser;
 public class SplashActivity extends Activity {
 
     public static final String TAG = "SplashActivity";
-    private TextView tv_splash_version;
+    private TextView tv_splash_version=null;
     private UpdateInfo info;
     private Context context = this;
     private Handler handler = new Handler() {
