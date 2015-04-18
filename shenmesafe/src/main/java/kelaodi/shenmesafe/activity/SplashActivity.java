@@ -7,11 +7,16 @@
 package kelaodi.shenmesafe.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,6 +26,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -31,6 +37,7 @@ import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.domain.UpdateInfo;
 import kelaodi.shenmesafe.engine.UpdateInfoParser;
+import kelaodi.shenmesafe.utils.DownLoadUtil;
 
 
 public class SplashActivity extends Activity {
@@ -39,12 +46,12 @@ public class SplashActivity extends Activity {
     private TextView tv_splash_version = null;
     private UpdateInfo info;
     private Context context = this;
+    private ProgressDialog progressDialog;//下载进度的对话框
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-
                 case constant.PARSE_XML_ERROR:
                     Toast.makeText(context, "解析失败", Toast.LENGTH_SHORT).show();
                     loadMainUI();
@@ -68,11 +75,88 @@ public class SplashActivity extends Activity {
                         loadMainUI();
                     } else {
                         Log.i(TAG, "版本号不相同，弹出来升级提示对话框");
+                        showUpdateDialog();
                     }
+                    break;
+                case constant.DOWNLOAD_SUCCESS:
+                    File file = (File) msg.obj;
+                    install(file);
+                    break;
+                case constant.DOWNLOAD_ERROR:
+                    Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
+                    loadMainUI();
                     break;
             }
         }
     };
+
+    /**
+     * 安装apk文件
+     */
+    private void install(File file) {
+        Intent intent = new Intent();
+        intent.setAction(intent.ACTION_VIEW);
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * 自动提示对话框，升级的啊。
+     */
+    private void showUpdateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("升级提醒");
+        builder.setMessage(info.getDescription());
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                progressDialog = new ProgressDialog(SplashActivity.this);
+                progressDialog.setTitle("升级下载");
+                progressDialog.setMessage("正在下载中");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
+                String apkurl = info.getApkurl();
+                final File file = new File(Environment.getExternalStorageDirectory(),
+                        DownLoadUtil.getFileName(apkurl));
+                //判断sd卡是否可用
+                Log.i(TAG + "sd可用么？", Environment.getExternalStorageState());
+                if (Environment.getExternalStorageState().
+                        equals(Environment.MEDIA_MOUNTED)) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            File saveFile = DownLoadUtil.download(info.getApkurl(),
+                                    file.getAbsolutePath(), progressDialog);
+                            super.run();
+
+                            Message msg = Message.obtain();
+                            if (saveFile != null) {
+                                msg.what = constant.DOWNLOAD_SUCCESS;
+                                msg.obj = saveFile;
+                            } else {
+                                msg.what = constant.DOWNLOAD_ERROR;
+                            }
+                            progressDialog.dismiss();
+                            handler.sendMessage(msg);
+
+                        }
+                    }.start();
+                } else {
+                    Toast.makeText(getApplicationContext(), "sd卡不可用", Toast.LENGTH_SHORT).show();
+                    loadMainUI();
+                }
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadMainUI();
+            }
+        });
+        builder.create().show();
+    }
 
 
     @Override
