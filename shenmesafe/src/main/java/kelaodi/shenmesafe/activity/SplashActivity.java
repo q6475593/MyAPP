@@ -5,7 +5,6 @@
  */
 
 package kelaodi.shenmesafe.activity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -25,14 +24,12 @@ import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.domain.UpdateInfo;

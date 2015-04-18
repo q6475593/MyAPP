@@ -3,16 +3,30 @@
   ~ 作者：王玉琨
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
+        android:background="#355E9E"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text="黑马卫士"
+        android:textSize="24sp"
+        android:textColor="#EBC950" />
+
+    <kelaodi.shenmesafe.ui.MarqueeText
+        android:singleLine="true"
+        android:ellipsize="marquee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="我是主界面"
-        android:textSize="36dp"
-        android:id="@+id/tv_splash_appname" />
+        android:text="我是手机的黑马卫士，我能时刻的保护您的移动安全......" />
 
-
-</RelativeLayout>
+    <GridView
+        android:id="@+id/gv_home"
+        android:numColumns="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
