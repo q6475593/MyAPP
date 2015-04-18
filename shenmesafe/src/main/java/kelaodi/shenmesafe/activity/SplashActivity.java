@@ -1,7 +1,7 @@
 
 /*
  * 版权所有，翻版必究
- * 做着：王玉琨
+ * 作者：王玉琨
  */
 
 package kelaodi.shenmesafe.activity;
@@ -17,6 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ import kelaodi.shenmesafe.engine.UpdateInfoParser;
 public class SplashActivity extends Activity {
 
     public static final String TAG = "SplashActivity";
-    private TextView tv_splash_version=null;
+    private TextView tv_splash_version = null;
     private UpdateInfo info;
     private Context context = this;
     private Handler handler = new Handler() {
@@ -73,14 +74,6 @@ public class SplashActivity extends Activity {
         }
     };
 
-    /**
-     * 进入主界面
-     */
-    private void loadMainUI() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +83,10 @@ public class SplashActivity extends Activity {
         tv_splash_version.setText("版本号:" + getAppversion());
         //连接互联网更新版本
         new Thread(new CheckVersionTask()).start();
+        AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
+        aa.setDuration(2000);
+        findViewById(R.id.rl_splash).setAnimation(aa);
+
     }
 
     private class CheckVersionTask implements Runnable {
@@ -97,6 +94,7 @@ public class SplashActivity extends Activity {
 
         @Override
         public void run() {
+            long startTime = System.currentTimeMillis();
             Message msg = Message.obtain();
             try {
                 URL url = new URL(getResources().getString(R.string.ServiceName));
@@ -124,11 +122,28 @@ public class SplashActivity extends Activity {
                 e.printStackTrace();
                 msg.what = constant.NETWORK_ERROR;//网络错误
             } finally {
+                long endTime = System.currentTimeMillis();
+                long dTime = endTime - startTime;
+                if (dTime < 2000) {
+                    try {
+                        Thread.sleep(2000 - dTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 handler.sendMessage(msg);
             }
         }
     }
 
+    /**
+     * 进入主界面
+     */
+    private void loadMainUI() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     /**
      * 获取应用程序的版本号
