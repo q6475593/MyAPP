@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 版权所有，翻版必究
+  ~ 作者：王玉琨
+  -->
+
+<resources>
+    <color name="trans">@android:color/transparent</color>
+    <color name="gray">#33000000</color>
+</resources>

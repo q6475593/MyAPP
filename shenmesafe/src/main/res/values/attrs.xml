@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 版权所有，翻版必究
+  ~ 作者：王玉琨
+  -->
+
+<resources>
+    <declare-styleable name="setting_view_style">
+        <attr name="title" format="string"></attr>
+        <attr name="content" format="string"></attr>
+    </declare-styleable>
+</resources>
