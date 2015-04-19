@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.adapter.HomeAdapter;
 
@@ -43,6 +42,5 @@ public class HomeActivity extends Activity {
                 }
             }
         });
-
     }
 }

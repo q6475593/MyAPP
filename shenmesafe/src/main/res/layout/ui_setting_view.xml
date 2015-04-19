@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/textView"
-        android:layout_above="@+id/textView2"
+        android:id="@+id/tv_settint_title"
+        android:layout_above="@+id/tv_setting_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
@@ -27,16 +27,18 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/textView2"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"/>
+        android:id="@+id/tv_setting_content"
+        android:layout_alignBottom="@+id/tv_setting_cb"
+        android:layout_alignLeft="@+id/tv_settint_title"
+        android:layout_alignStart="@+id/tv_settint_title"/>
 
     <CheckBox
+        android:clickable="false"
+        android:focusable="false"
         android:layout_marginRight="10dip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
+        android:id="@+id/tv_setting_cb"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
@@ -45,7 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="1dip"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/listview_devider"
-        />
+        android:background="@drawable/listview_devider"/>
 
 </RelativeLayout>

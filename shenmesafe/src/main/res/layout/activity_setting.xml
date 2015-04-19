@@ -20,6 +20,10 @@
         android:textColor="#EBC950"/>
 
     <kelaodi.shenmesafe.ui.SettingView
+        android:id="@+id/sv_setting_update"
+        kelaodi:timu="自动更新设置"
+        kelaodi:checked_text="自动更新设置已开启"
+        kelaodi:unchecked_text="自动更新设置未开启"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>
