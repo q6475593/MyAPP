@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import kelaodi.shenmesafe.R;
 
 /**
