@@ -25,6 +25,7 @@
         android:text="我是手机的黑马卫士，我能时刻的保护您的移动安全......" />
 
     <GridView
+        android:listSelector="@android:color/transparent"
         android:id="@+id/gv_home"
         android:numColumns="3"
         android:layout_width="wrap_content"

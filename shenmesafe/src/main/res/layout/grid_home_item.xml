@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 版权所有，翻版必究
+  ~ 作者：王玉琨
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_marginTop="5dip"
+        android:id="@+id/iv_home_icon"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:src="@drawable/safe"/>
+
+    <TextView
+        android:layout_marginBottom="5dip"
+        android:id="@+id/tv_home_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="手机防盗"
+        android:textColor="#508BEB"
+        android:textSize="18dip"/>
+
+</LinearLayout>
