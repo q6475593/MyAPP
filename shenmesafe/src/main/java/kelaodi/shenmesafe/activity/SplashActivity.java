@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -53,7 +54,7 @@ public class SplashActivity extends Activity {
     private View splash;
     private ProgressDialog progressDialog;//下载进度的对话框
     private TVoffAnimation tvoffAnimation = new TVoffAnimation();
-    private TVonAnimation  tvonAnimation=new TVonAnimation();
+    private TVonAnimation tvonAnimation = new TVonAnimation();
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -92,6 +93,10 @@ public class SplashActivity extends Activity {
                 case constant.DOWNLOAD_ERROR:
                     Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
                     loadMainUI();
+                    break;
+                case constant.ISNOTUPDATE:
+                    loadMainUI();
+
                     break;
             }
         }
@@ -137,7 +142,6 @@ public class SplashActivity extends Activity {
                             File saveFile = DownLoadUtil.download(info.getApkurl(),
                                     file.getAbsolutePath(), progressDialog);
                             super.run();
-
                             Message msg = Message.obtain();
                             if (saveFile != null) {
                                 msg.what = constant.DOWNLOAD_SUCCESS;
@@ -174,58 +178,66 @@ public class SplashActivity extends Activity {
         tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
         tv_splash_version.setText("版本号:" + getAppversion());
         //连接互联网更新版本
-        new Thread(new CheckVersionTask()).start();
-        AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
-        aa.setDuration(2000);
         splash.setAnimation(tvonAnimation);
-
+        new Thread(new CheckVersionTask()).start();
+//        AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
+//        aa.setDuration(2000);
     }
 
     private class CheckVersionTask implements Runnable {
-
+        private Message msg = Message.obtain();
 
         @Override
         public void run() {
-            long startTime = System.currentTimeMillis();
-            Message msg = Message.obtain();
-            try {
-                URL url = new URL(getResources().getString(R.string.ServiceName));
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setConnectTimeout(2000);
-
-                int code = conn.getResponseCode();
-                if (code == 200) {
-                    InputStream is = conn.getInputStream();
-                    info = UpdateInfoParser.getUpdateInfo(is);
-                    if (info != null) {
-                        msg.what = constant.PARSE_XML_SUCCESS; //成功
+            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+            boolean Isupdate = sp.getBoolean("update", true);
+            if (!Isupdate) {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                msg.what = constant.ISNOTUPDATE;
+            } else if (Isupdate) {
+                long startTime = System.currentTimeMillis();
+                try {
+                    URL url = new URL(getResources().getString(R.string.ServiceName));
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setConnectTimeout(3000);
+                    int code = conn.getResponseCode();
+                    if (code == 200) {
+                        InputStream is = conn.getInputStream();
+                        info = UpdateInfoParser.getUpdateInfo(is);
+                        if (info != null) {
+                            msg.what = constant.PARSE_XML_SUCCESS; //成功
+                        } else {
+                            msg.what = constant.PARSE_XML_ERROR;//错误
+                        }
                     } else {
-                        msg.what = constant.PARSE_XML_ERROR;//错误
+                        msg.what = constant.SERVER_ERROR; //服务器内部错误
                     }
-                } else {
-                    msg.what = constant.SERVER_ERROR; //服务器内部错误
-                }
-
-            } catch (MalformedURLException e) {
-                msg.what = constant.URL_ERROR;//url错误
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-                msg.what = constant.NETWORK_ERROR;//网络错误
-            } finally {
-                long endTime = System.currentTimeMillis();
-                long dTime = endTime - startTime;
-                if (dTime < 2000) {
-                    try {
-                        Thread.sleep(2000 - dTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    msg.what = constant.URL_ERROR;//url错误
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    msg.what = constant.NETWORK_ERROR;//网络错误
+                } finally {
+                    long endTime = System.currentTimeMillis();
+                    long dTime = endTime - startTime;
+                    if (dTime < 2000) {
+                        try {
+                            Thread.sleep(2000 - dTime);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-                handler.sendMessage(msg);
 
+
+                }
             }
+            handler.sendMessage(msg);
         }
     }
 
@@ -233,11 +245,9 @@ public class SplashActivity extends Activity {
      * 进入主界面
      */
     private void loadMainUI() {
-        splash.startAnimation(tvoffAnimation);
         tvoffAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -249,9 +259,9 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
+        splash.startAnimation(tvoffAnimation);
 
     }
 

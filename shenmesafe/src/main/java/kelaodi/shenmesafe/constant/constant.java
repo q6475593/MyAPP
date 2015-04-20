@@ -17,6 +17,7 @@ public class constant {
     public static final int NETWORK_ERROR = 14;
     public static final int DOWNLOAD_SUCCESS = 15;
     public static final int DOWNLOAD_ERROR = 16;
+    public static final int ISNOTUPDATE = 17;
 
 
 }
