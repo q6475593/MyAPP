@@ -16,7 +16,7 @@ public class TVonAnimation extends Animation {
     public void initialize(int width, int height, int parentWidth, int parentHeight) {
         super.initialize(width, height, parentWidth, parentHeight);
         //设置动画时间700
-        setDuration(3000);
+        setDuration(700);
         //设置动画结束后就结束在动画结束的时刻
         setFillAfter(true);
         //设置view的保存点

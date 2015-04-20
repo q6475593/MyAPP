@@ -192,7 +192,7 @@ public class SplashActivity extends Activity {
                 URL url = new URL(getResources().getString(R.string.ServiceName));
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
-                conn.setConnectTimeout(5000);
+                conn.setConnectTimeout(2000);
 
                 int code = conn.getResponseCode();
                 if (code == 200) {
