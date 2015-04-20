@@ -7,7 +7,9 @@ package kelaodi.shenmesafe.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -62,6 +64,13 @@ public class HomeAdapter extends BaseAdapter {
         ImageView iv_icon = (ImageView) gridview.findViewById(R.id.iv_home_icon);
         tv_name.setText(names[position]);
         iv_icon.setImageResource(icons[position]);
+        if (position == 0) {
+            SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+            String newname = sp.getString("newname", "");
+            if (!TextUtils.isEmpty(newname)) {
+                tv_name.setText(newname);
+            }
+        }
         return gridview;
     }
 }

@@ -24,8 +24,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +36,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.R;
+import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.domain.UpdateInfo;
 import kelaodi.shenmesafe.engine.UpdateInfoParser;
 import kelaodi.shenmesafe.ui.TVoffAnimation;
@@ -96,7 +96,6 @@ public class SplashActivity extends Activity {
                     break;
                 case constant.ISNOTUPDATE:
                     loadMainUI();
-
                     break;
             }
         }
@@ -180,8 +179,6 @@ public class SplashActivity extends Activity {
         //连接互联网更新版本
         splash.setAnimation(tvonAnimation);
         new Thread(new CheckVersionTask()).start();
-//        AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
-//        aa.setDuration(2000);
     }
 
     private class CheckVersionTask implements Runnable {
@@ -193,7 +190,7 @@ public class SplashActivity extends Activity {
             boolean Isupdate = sp.getBoolean("update", true);
             if (!Isupdate) {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -204,7 +201,7 @@ public class SplashActivity extends Activity {
                     URL url = new URL(getResources().getString(R.string.ServiceName));
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
-                    conn.setConnectTimeout(3000);
+                    conn.setConnectTimeout(2000);
                     int code = conn.getResponseCode();
                     if (code == 200) {
                         InputStream is = conn.getInputStream();
@@ -285,24 +282,5 @@ public class SplashActivity extends Activity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_splash, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
