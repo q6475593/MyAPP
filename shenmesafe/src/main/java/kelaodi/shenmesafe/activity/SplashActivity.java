@@ -5,6 +5,7 @@
  */
 
 package kelaodi.shenmesafe.activity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,19 +22,25 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.domain.UpdateInfo;
 import kelaodi.shenmesafe.engine.UpdateInfoParser;
+import kelaodi.shenmesafe.ui.TVoffAnimation;
+import kelaodi.shenmesafe.ui.TVonAnimation;
 import kelaodi.shenmesafe.utils.DownLoadUtil;
 
 
@@ -43,7 +50,10 @@ public class SplashActivity extends Activity {
     private TextView tv_splash_version = null;
     private UpdateInfo info;
     private Context context = this;
+    private View splash;
     private ProgressDialog progressDialog;//下载进度的对话框
+    private TVoffAnimation tvoffAnimation = new TVoffAnimation();
+    private TVonAnimation  tvonAnimation=new TVonAnimation();
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -160,13 +170,14 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        splash = findViewById(R.id.rl_splash);
         tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
         tv_splash_version.setText("版本号:" + getAppversion());
         //连接互联网更新版本
         new Thread(new CheckVersionTask()).start();
         AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
         aa.setDuration(2000);
-        findViewById(R.id.rl_splash).setAnimation(aa);
+        splash.setAnimation(tvonAnimation);
 
     }
 
@@ -213,6 +224,7 @@ public class SplashActivity extends Activity {
                     }
                 }
                 handler.sendMessage(msg);
+
             }
         }
     }
@@ -221,10 +233,28 @@ public class SplashActivity extends Activity {
      * 进入主界面
      */
     private void loadMainUI() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        splash.startAnimation(tvoffAnimation);
+        tvoffAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
     }
+
 
     /**
      * 获取应用程序的版本号
