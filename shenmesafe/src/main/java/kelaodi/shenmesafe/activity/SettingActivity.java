@@ -24,8 +24,8 @@ import kelaodi.shenmesafe.ui.SettingView;
  * Created by Administrator on 2015/4/19.
  */
 public class SettingActivity extends Activity {
-    private SettingView sv_setting_update;
-    private CheckBox tv_setting_cb;
+    private SettingView sv_setting_update, sv_setting_Opentest;
+    private CheckBox tv_setting_cb, tv_opentext_cb;
     private SharedPreferences sp;
 
 
@@ -40,16 +40,21 @@ public class SettingActivity extends Activity {
     private void initView() {
         sp = getSharedPreferences("config", MODE_PRIVATE);
         sv_setting_update = (SettingView) findViewById(R.id.sv_setting_update);
-        tv_setting_cb = (CheckBox) findViewById(R.id.tv_setting_cb);
+        sv_setting_Opentest = (SettingView) findViewById(R.id.sv_setting_Opentest);
+        tv_setting_cb = (CheckBox) sv_setting_update.findViewById(R.id.tv_setting_cb);
+        tv_opentext_cb = (CheckBox) sv_setting_Opentest.findViewById(R.id.tv_setting_cb);
         boolean Isupdate = sp.getBoolean("update", true);
+        boolean Isopentest = sp.getBoolean("opentest", true);
         tv_setting_cb.setChecked(Isupdate);
+        tv_opentext_cb.setChecked(Isopentest);
     }
 
     private void oncliclistener() {
+        final SharedPreferences.Editor editor = sp.edit();
         sv_setting_update.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                SharedPreferences.Editor editor = sp.edit();
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         tv_setting_cb.setPressed(true);
@@ -63,6 +68,29 @@ public class SettingActivity extends Activity {
                         } else if (sv_setting_update.Ischecked(tv_setting_cb) == false) {
                             sv_setting_update.Setchecked(tv_setting_cb, true);
                             editor.putBoolean("update", true);
+                        }
+                        editor.commit();
+                        break;
+                }
+                return true;
+            }
+        });
+        sv_setting_Opentest.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        tv_opentext_cb.setPressed(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        tv_opentext_cb.setPressed(false);
+                        if (sv_setting_Opentest.Ischecked(tv_opentext_cb)) {
+                            sv_setting_Opentest.Setchecked(tv_opentext_cb, false);
+                            editor.putBoolean("opentest", false);
+                        } else if (sv_setting_Opentest.Ischecked(tv_opentext_cb) == false) {
+                            sv_setting_Opentest.Setchecked(tv_opentext_cb, true);
+                            editor.putBoolean("opentest", true);
                         }
                         editor.commit();
                         break;

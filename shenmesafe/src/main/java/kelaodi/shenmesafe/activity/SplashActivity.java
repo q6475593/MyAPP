@@ -190,7 +190,7 @@ public class SplashActivity extends Activity {
             boolean Isupdate = sp.getBoolean("update", true);
             if (!Isupdate) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -201,7 +201,7 @@ public class SplashActivity extends Activity {
                     URL url = new URL(getResources().getString(R.string.ServiceName));
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
-                    conn.setConnectTimeout(2000);
+                    conn.setConnectTimeout(3000);
                     int code = conn.getResponseCode();
                     if (code == 200) {
                         InputStream is = conn.getInputStream();

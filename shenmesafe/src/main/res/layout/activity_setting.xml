@@ -26,4 +26,12 @@
         kelaodi:unchecked_text="自动更新设置未开启"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <kelaodi.shenmesafe.ui.SettingView
+        android:id="@+id/sv_setting_Opentest"
+        kelaodi:timu="开启密码验证"
+        kelaodi:checked_text="密码验证设置已开启"
+        kelaodi:unchecked_text="密码验证设置未开启"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
