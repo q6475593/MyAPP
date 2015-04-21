@@ -55,17 +55,18 @@ public class HomeActivity extends Activity {
         inflate = LayoutInflater.from(HomeActivity.this);
         sp = context.getSharedPreferences("config", MODE_PRIVATE);
         existing_password = sp.getString("password", "");
-        final boolean isempty = TextUtils.isEmpty(existing_password);
-        final boolean Isopentest = sp.getBoolean("opentest", true);
+
         gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                boolean Isempty = TextUtils.isEmpty(existing_password);
+                boolean Isopentest = sp.getBoolean("opentest", true);
                 switch (position) {
                     case 0:
                         if (Isopentest) {//打开
-                            if (!isempty) {
+                            if (!Isempty) {
                                 dialogsingle(LostFindActivity.class);
-                            } else if (isempty) {
+                            } else if (Isempty) {
                                 dialogdouble();
                             }
                         } else if (!Isopentest) {
@@ -74,9 +75,9 @@ public class HomeActivity extends Activity {
                         break;
                     case 8:
                         if (Isopentest) {
-                            if (!isempty) {
+                            if (!Isempty) {
                                 dialogsingle(SettingActivity.class);
-                            } else if (isempty) {
+                            } else if (Isempty) {
                                 dialogdouble();
                             }
                         } else if (!Isopentest) {
@@ -84,8 +85,11 @@ public class HomeActivity extends Activity {
                         }
                         break;
                 }
+                Isempty = TextUtils.isEmpty(existing_password);
+                Isopentest = sp.getBoolean("opentest", true);
             }
         });
+
     }
 
 

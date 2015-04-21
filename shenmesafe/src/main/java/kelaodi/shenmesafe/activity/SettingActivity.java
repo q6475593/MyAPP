@@ -52,7 +52,6 @@ public class SettingActivity extends Activity {
     private void oncliclistener() {
         final SharedPreferences.Editor editor = sp.edit();
         sv_setting_update.setOnTouchListener(new View.OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
