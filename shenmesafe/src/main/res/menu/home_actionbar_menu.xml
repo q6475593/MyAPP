@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeActivity">
+    <item
+        android:id="@+id/action_write_note"
+        android:icon="@drawable/write_note"
+        app:showAsAction="always"
+        android:title="写日记" />
+    <item
+        android:id="@+id/action_togamble"
+        android:icon="@drawable/togamble"
+        app:showAsAction="ifRoom"
+        android:title="赌一把" />
+    <item
+        android:id="@+id/action_maps"
+        android:icon="@drawable/maps"
+        app:showAsAction="never"
+        android:title="看地图" />
+
+</menu>

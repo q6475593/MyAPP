@@ -5,7 +5,7 @@ android {
     buildToolsVersion '22.0.1'
     defaultConfig {
         applicationId "kelaodi.shenmesafe"
-        minSdkVersion 10
+        minSdkVersion 15
         targetSdkVersion 22
         versionName '3.0'
         versionCode 1
