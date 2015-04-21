@@ -5,6 +5,7 @@
 
 package kelaodi.shenmesafe.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -27,6 +28,8 @@ public class SettingActivity extends Activity {
     private SettingView sv_setting_update, sv_setting_Opentest;
     private CheckBox tv_setting_cb, tv_opentext_cb;
     private SharedPreferences sp;
+    private boolean Isupdate;
+    private boolean Isopentest;
 
 
     @Override
@@ -34,7 +37,11 @@ public class SettingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         initView();
+        initActionbar();
         oncliclistener();
+    }
+
+    private void initActionbar() {
     }
 
     private void initView() {
@@ -43,8 +50,8 @@ public class SettingActivity extends Activity {
         sv_setting_Opentest = (SettingView) findViewById(R.id.sv_setting_Opentest);
         tv_setting_cb = (CheckBox) sv_setting_update.findViewById(R.id.tv_setting_cb);
         tv_opentext_cb = (CheckBox) sv_setting_Opentest.findViewById(R.id.tv_setting_cb);
-        boolean Isupdate = sp.getBoolean("update", true);
-        boolean Isopentest = sp.getBoolean("opentest", true);
+        Isupdate = sp.getBoolean("update", true);
+        Isopentest = sp.getBoolean("opentest", true);
         tv_setting_cb.setChecked(Isupdate);
         tv_opentext_cb.setChecked(Isopentest);
     }
@@ -97,6 +104,8 @@ public class SettingActivity extends Activity {
                 return true;
             }
         });
+        Isupdate = sp.getBoolean("update", true);
+        Isopentest = sp.getBoolean("opentest", true);
     }
 
     @Override
@@ -129,6 +138,7 @@ public class SettingActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lostfindmenu, menu);
+
         return true;
     }
 

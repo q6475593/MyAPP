@@ -5,25 +5,28 @@
 
 package kelaodi.shenmesafe.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.adapter.HomeAdapter;
@@ -42,14 +45,15 @@ public class HomeActivity extends Activity {
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
     private String password_first, password_second, single_only, existing_password;
     private View doublepassword, singlepassword;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-
     }
+
 
     private void initView() {
         gv_home = (GridView) findViewById(R.id.gv_home);
@@ -148,7 +152,6 @@ public class HomeActivity extends Activity {
                     } else if (password_first.length() < 6 || password_second.length() < 6) {
                         Toast.makeText(context, "输入的密码必须大于六位", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
@@ -166,10 +169,30 @@ public class HomeActivity extends Activity {
         startActivity(intent);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_actionbar_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.home_actionbar_menu, menu);
+        MenuItem[] mMenuItem = new MenuItem[menu.size()];
+        for (int i = 0; i < menu.size(); i++) {
+            mMenuItem[i] = menu.getItem(i);
+            mMenuItem[i].setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_write_note:
+                break;
+            case R.id.action_togamble:
+                break;
+            case R.id.action_maps:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

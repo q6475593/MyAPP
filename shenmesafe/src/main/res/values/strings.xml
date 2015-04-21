@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">神马护卫</string>
-
+    <string name="app_name">黑章鱼卫士</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>
