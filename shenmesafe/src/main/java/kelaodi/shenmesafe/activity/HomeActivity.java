@@ -38,14 +38,12 @@ import kelaodi.shenmesafe.adapter.HomeAdapter;
 public class HomeActivity extends Activity {
     private GridView gv_home;
     private HomeActivity homeActivity;
-    private SettingActivity settingActivity;
     private Context context = this;
     private SharedPreferences sp;
     private LayoutInflater inflate;
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
     private String password_first, password_second, single_only, existing_password;
     private View doublepassword, singlepassword;
-    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +52,20 @@ public class HomeActivity extends Activity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        initView();
+        super.onResume();
+    }
 
     private void initView() {
         gv_home = (GridView) findViewById(R.id.gv_home);
-        gv_home.setAdapter(new HomeAdapter(homeActivity, context));
         inflate = LayoutInflater.from(HomeActivity.this);
         sp = context.getSharedPreferences("config", MODE_PRIVATE);
         existing_password = sp.getString("password", "");
+
+
+        gv_home.setAdapter(new HomeAdapter(homeActivity, context));
 
         gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,6 +93,13 @@ public class HomeActivity extends Activity {
                             }
                         } else if (!Isopentest) {
                             intent(SettingActivity.class);
+                        }
+                        break;
+                    case 9:
+                        if (Isopentest) {
+                            intent(PasswordResetActivity.class);
+                        } else if (!Isopentest) {
+
                         }
                         break;
                 }

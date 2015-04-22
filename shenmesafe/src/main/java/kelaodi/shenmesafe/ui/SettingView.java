@@ -8,11 +8,14 @@ package kelaodi.shenmesafe.ui;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import kelaodi.shenmesafe.R;
+import kelaodi.shenmesafe.activity.SettingActivity;
 
 /**
  * Created by Administrator on 2015/4/19.
@@ -22,8 +25,7 @@ public class SettingView extends RelativeLayout {
 
     private View view;
     private TextView tv_setting_title, tv_setting_content;
-    private String check_text, uncheck_text;
-
+    private String content, timu;
 
     public SettingView(Context context) {
         super(context);
@@ -36,11 +38,10 @@ public class SettingView extends RelativeLayout {
 
         //把属性集和我们自己定义的属性集合建立映射关系
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.setting_view_style);
-        String timu = array.getString(R.styleable.setting_view_style_timu);
-        check_text = array.getString(R.styleable.setting_view_style_checked_text);
-        uncheck_text = array.getString(R.styleable.setting_view_style_unchecked_text);
+        timu = array.getString(R.styleable.setting_view_style_timu);
+        content = array.getString(R.styleable.setting_view_style_content);
         tv_setting_title.setText(timu);
-        tv_setting_content.setText(uncheck_text);
+        tv_setting_content.setText(content);
         array.recycle();
     }
 
@@ -86,12 +87,12 @@ public class SettingView extends RelativeLayout {
      * @param checkBox
      * @param checked
      */
-    public void Setchecked(CheckBox checkBox, boolean checked) {
+    public void Setchecked(CheckBox checkBox, boolean checked,String st) {
         checkBox.setChecked(checked);
         if (checked == true) {
-            CheckTextView(tv_setting_content, check_text);
+            CheckTextView(tv_setting_content, st);
         } else if (checked == false) {
-            CheckTextView(tv_setting_content, uncheck_text);
+            CheckTextView(tv_setting_content, st);
         }
     }
 

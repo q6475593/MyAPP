@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ 版权所有，翻版必究
   ~ 作者：王玉琨
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:kelaodi="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    xmlns:kelaodi="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:background="#355E9E"
@@ -17,21 +16,19 @@
         android:gravity="center"
         android:text="设置中心"
         android:textSize="24sp"
-        android:textColor="#EBC950"/>
+        android:textColor="#EBC950" />
 
     <kelaodi.shenmesafe.ui.SettingView
         android:id="@+id/sv_setting_update"
         kelaodi:timu="自动更新设置"
-        kelaodi:checked_text="自动更新设置已开启"
-        kelaodi:unchecked_text="自动更新设置未开启"
+        kelaodi:content="自动更新设置已开启"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <kelaodi.shenmesafe.ui.SettingView
         android:id="@+id/sv_setting_Opentest"
         kelaodi:timu="开启密码验证"
-        kelaodi:checked_text="密码验证设置已开启"
-        kelaodi:unchecked_text="密码验证设置未开启"
+        kelaodi:content="密码验证设置已开启"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>
