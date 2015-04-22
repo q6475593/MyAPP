@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,11 +26,16 @@ import android.widget.GridView;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import org.apache.commons.logging.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.adapter.HomeAdapter;
+import kelaodi.shenmesafe.utils.MD5;
+
+import static java.lang.String.valueOf;
 
 
 /**
@@ -44,6 +50,7 @@ public class HomeActivity extends Activity {
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
     private String password_first, password_second, single_only, existing_password;
     private View doublepassword, singlepassword;
+    private boolean Isempty, Isopentest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +70,13 @@ public class HomeActivity extends Activity {
         inflate = LayoutInflater.from(HomeActivity.this);
         sp = context.getSharedPreferences("config", MODE_PRIVATE);
         existing_password = sp.getString("password", "");
-
-
         gv_home.setAdapter(new HomeAdapter(homeActivity, context));
-
+        Isempty = TextUtils.isEmpty(existing_password);
+        Isopentest = sp.getBoolean("opentest", true);
         gv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                boolean Isempty = TextUtils.isEmpty(existing_password);
-                boolean Isopentest = sp.getBoolean("opentest", true);
+
                 switch (position) {
                     case 0:
                         if (Isopentest) {//打开
@@ -103,13 +108,10 @@ public class HomeActivity extends Activity {
                         }
                         break;
                 }
-                Isempty = TextUtils.isEmpty(existing_password);
-                Isopentest = sp.getBoolean("opentest", true);
+
             }
         });
-
     }
-
 
     private void dialogsingle(final Class<?> cls) {
         final AlertDialog.Builder builder_single = new AlertDialog.Builder(this, R.style.DoublePassword);
@@ -121,7 +123,7 @@ public class HomeActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 et_home_password_only = (EditText) singlepassword.findViewById(R.id.et_home_password_only);
                 single_only = et_home_password_only.getText().toString().trim();
-                if (single_only.equals(existing_password)) {
+                if (MD5.MD5(single_only).equals(existing_password)) {
                     Toast.makeText(context, "验证成功!", Toast.LENGTH_SHORT).show();
                     intent(cls);
                 } else if (!single_only.equals(existing_password)) {
@@ -156,9 +158,12 @@ public class HomeActivity extends Activity {
                 } else if (!TextUtils.isEmpty(password_second) && !TextUtils.isEmpty(password_first)) {
                     if (password_first.equals(password_second) && password_first.length() > 5
                             && password_second.length() > 5) {
-                        editor.putString("password", password_second);
+                        editor.putString("password", MD5.MD5(password_second));
                         editor.commit();
                         Toast.makeText(context, "已成功保存密码，请牢记密码" + password_second, Toast.LENGTH_SHORT).show();
+                        existing_password = sp.getString("password", "");
+                        Isempty = TextUtils.isEmpty(existing_password);
+                        Isopentest = sp.getBoolean("opentest", true);
                     } else if (!password_first.equals(password_second)) {
                         Toast.makeText(context, "您两次输入的密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                     } else if (password_first.length() < 6 || password_second.length() < 6) {
@@ -174,6 +179,7 @@ public class HomeActivity extends Activity {
             }
         });
         builder_double.show();
+
     }
 
     private void intent(Class<?> cls) {
@@ -206,5 +212,6 @@ public class HomeActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

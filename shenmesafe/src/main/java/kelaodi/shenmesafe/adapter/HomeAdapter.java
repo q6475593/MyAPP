@@ -90,7 +90,6 @@ public class HomeAdapter extends BaseAdapter {
         if (Isopentest) {
             tv_name.setText(opentestnames[position]);
             iv_icon.setImageResource(opentesticons[position]);
-            Log.i("嘟嘟嘟", "嘟嘟嘟");
         } else if (!Isopentest) {
             tv_name.setText(names[position]);
             iv_icon.setImageResource(icons[position]);
