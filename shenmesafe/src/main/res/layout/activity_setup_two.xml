@@ -6,7 +6,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:id="@+id/setup_two">
 
     <kelaodi.shenmesafe.ui.MarqueeText
         style="@style/text_title_style"
@@ -112,7 +113,9 @@
             android:src="@drawable/bind"
             android:layout_centerInParent="true"/>
 
-        <Button style="@style/button_pre"/>
+        <Button
+            style="@style/button_pre"
+            android:id="@+id/button_pre"/>
 
         <Button style="@style/button_next"/>
     </RelativeLayout>

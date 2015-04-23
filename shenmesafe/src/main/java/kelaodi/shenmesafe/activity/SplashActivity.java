@@ -40,6 +40,7 @@ import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.domain.UpdateInfo;
 import kelaodi.shenmesafe.engine.UpdateInfoParser;
+import kelaodi.shenmesafe.ui.LeftOutRightIn;
 import kelaodi.shenmesafe.ui.TVoffAnimation;
 import kelaodi.shenmesafe.ui.TVonAnimation;
 import kelaodi.shenmesafe.utils.DownLoadUtil;
@@ -55,6 +56,10 @@ public class SplashActivity extends Activity {
     private ProgressDialog progressDialog;//下载进度的对话框
     private TVoffAnimation tvoffAnimation = new TVoffAnimation();
     private TVonAnimation tvonAnimation = new TVonAnimation();
+
+
+
+
     private SharedPreferences sp;
     private Handler handler = new Handler() {
         @Override
@@ -174,13 +179,22 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        initview();
+        initdate();
+        //连接互联网更新版本
+        new Thread(new CheckVersionTask()).start();
+    }
+
+    private void initview() {
         splash = findViewById(R.id.rl_splash);
         tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
-        tv_splash_version.setText("版本号:" + getAppversion());
-        //连接互联网更新版本
-        splash.setAnimation(tvonAnimation);
+    }
+
+    private void initdate() {
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        new Thread(new CheckVersionTask()).start();
+        tv_splash_version.setText("版本号:" + getAppversion());
+        splash.setAnimation(tvonAnimation);
+
     }
 
     private class CheckVersionTask implements Runnable {
@@ -251,7 +265,7 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (!sp.getBoolean("Issetup", false) ) {
+                if (!sp.getBoolean("Issetup", false)) {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("Issetup", true);
                     editor.commit();
@@ -263,8 +277,6 @@ public class SplashActivity extends Activity {
                     startActivity(intent);
                     finish();
                 }
-
-
             }
 
             @Override

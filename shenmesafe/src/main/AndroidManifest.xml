@@ -21,15 +21,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.SetupOneActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
+        <activity
+            android:name=".activity.SetupTwoActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
+        <activity
+            android:name=".activity.SetupThreeActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
+        <activity
+            android:name=".activity.SetupFourActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
 
         <activity android:name=".activity.HomeActivity"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.LostFindActivity"/>
         <activity android:name=".activity.PasswordResetActivity"/>
-        <activity
-            android:name=".activity.SetupOneActivity"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
+
 
         <receiver android:name=".receiver.OutCallReceiver">
             <intent-filter android:priority="1000">

@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_splash"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splashbk">
+                android:id="@+id/rl_splash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/splashbk">
 
 
     <ImageView
@@ -10,10 +10,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/iv_splash_logo"
         android:src="@drawable/cotcat"
-
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        />
+        android:layout_alignParentRight="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +20,7 @@
         android:textSize="25dp"
         android:id="@+id/tv_splash_appname"
         android:layout_below="@+id/iv_splash_logo"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,12 +29,12 @@
         android:textSize="15dp"
         android:id="@+id/tv_splash_version"
         android:layout_below="@+id/tv_splash_appname"
-        android:layout_alignRight="@+id/iv_splash_logo" />
+        android:layout_alignRight="@+id/iv_splash_logo"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/iv_splash_logo" />
+        android:layout_alignRight="@+id/iv_splash_logo"/>
 
 </RelativeLayout>
