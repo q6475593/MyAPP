@@ -55,6 +55,7 @@ public class SplashActivity extends Activity {
     private ProgressDialog progressDialog;//下载进度的对话框
     private TVoffAnimation tvoffAnimation = new TVoffAnimation();
     private TVonAnimation tvonAnimation = new TVonAnimation();
+    private SharedPreferences sp;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -178,6 +179,7 @@ public class SplashActivity extends Activity {
         tv_splash_version.setText("版本号:" + getAppversion());
         //连接互联网更新版本
         splash.setAnimation(tvonAnimation);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         new Thread(new CheckVersionTask()).start();
     }
 
@@ -249,9 +251,20 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                if (!sp.getBoolean("Issetup", false) ) {
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("Issetup", true);
+                    editor.commit();
+                    Intent intent = new Intent(SplashActivity.this, SetupOneActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+
             }
 
             @Override
@@ -280,7 +293,6 @@ public class SplashActivity extends Activity {
         }
         return null;
     }
-
 
 
 }

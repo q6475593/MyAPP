@@ -22,18 +22,8 @@ public class LostFindActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lostfind);
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        initsetup();
 
 
-    }
-
-    private void initsetup() {
-        if (!isSetup()) {
-        }
-    }
-
-    private boolean isSetup() {
-        return sp.getBoolean("setup", false);
     }
 
 

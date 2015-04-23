@@ -1,0 +1,119 @@
+<!--
+  ~ 版权所有，翻版必究
+  ~ 作者：王玉琨
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <kelaodi.shenmesafe.ui.MarqueeText
+        style="@style/text_title_style"
+        android:text="欢迎使用黑章鱼卫士"/>
+
+    <kelaodi.shenmesafe.ui.MarqueeText
+        android:layout_toRightOf="@+id/one"
+        style="@style/text_content_style"
+        android:layout_marginTop="10dp"
+        android:text="您的黑章鱼手机卫士："/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/one"
+            style="@style/image_content_star"/>
+
+        <kelaodi.shenmesafe.ui.MarqueeText
+            android:layout_toRightOf="@+id/one"
+            style="@style/text_content_style"
+            android:text="SIM卡变更报警"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/two"
+            style="@style/image_content_star"/>
+
+        <kelaodi.shenmesafe.ui.MarqueeText
+            android:layout_toRightOf="@+id/two"
+            style="@style/text_content_style"
+            android:text="GPS追踪"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/three"
+            style="@style/image_content_star"/>
+
+        <kelaodi.shenmesafe.ui.MarqueeText
+            android:layout_toRightOf="@+id/three"
+            style="@style/text_content_style"
+            android:text="远程销毁数据"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/four"
+            style="@style/image_content_star"/>
+
+        <kelaodi.shenmesafe.ui.MarqueeText
+            android:layout_toRightOf="@+id/four"
+            style="@style/text_content_style"
+            android:text="远程锁屏"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            style="@style/image_presence_online"/>
+
+        <ImageView
+            style="@style/image_presence_invisible"/>
+
+        <ImageView
+            style="@style/image_presence_invisible"/>
+
+        <ImageView
+            style="@style/image_presence_invisible"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/setup1"
+            android:layout_centerInParent="true"/>
+
+        <Button            style="@style/button_next"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

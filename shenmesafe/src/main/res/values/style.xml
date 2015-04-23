@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="text_title_style">
+        <item name="android:background">#355E9E</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#EBC950</item>
+    </style>
+
+    <style name="image_content_star">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@android:drawable/star_big_on</item>
+
+    </style>
+
+    <style name="image_content_lock">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/lock</item>
+
+    </style>
+
+    <style name="text_content_style">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+    </style>
+
+    <style name="image_presence_online">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@android:drawable/presence_online</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="image_presence_invisible">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@android:drawable/presence_invisible</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="button_pre">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:text">上一步</item>
+        <item name="android:drawableLeft">@drawable/previous</item>
+        <item name="android:background">@drawable/button_bg_selector</item>
+    </style>
+
+    <style name="button_next">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:text">下一步</item>
+        <item name="android:drawableRight">@drawable/next</item>
+        <item name="android:background">@drawable/button_bg_selector</item>
+    </style>
+
+    <style name="button_complete" parent="button_next">
+        <item name="android:text">完成</item>
+
+    </style>
+
+</resources>
