@@ -257,7 +257,7 @@ public class SplashActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
 
                 if (!sp.getBoolean("Issetup", false)) {
-                    Intent intent = new Intent(SplashActivity.this, SetupOneActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
                     startActivity(intent);
                     finish();
                 } else {//测试关闭

@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +16,13 @@ import java.util.ArrayList;
 
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.constant.constant;
-import kelaodi.shenmesafe.ui.LeftOut;
-import kelaodi.shenmesafe.ui.LeftIn;
-import kelaodi.shenmesafe.ui.RightIn;
 import kelaodi.shenmesafe.ui.TVoffAnimation;
 import kelaodi.shenmesafe.ui.TVonAnimation;
 
 /**
  * Created by Administrator on 2015/4/23.
  */
-public class SetupOneActivity extends Activity {
+public class WelcomeActivity extends Activity {
     private View setup_one, setup_two, setup_three, setup_four;
     private ViewPager viewPager;
     private ArrayList<View> viewContainter = new ArrayList<>();
@@ -126,7 +120,7 @@ public class SetupOneActivity extends Activity {
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putBoolean("Issetup", true);
                         editor.commit();
-                        Intent intent = new Intent(SetupOneActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
                         Bundle bd = new Bundle();
                         bd.putInt("fromwhere", constant.ONLY);
                         startActivity(intent);

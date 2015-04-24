@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SetupOneActivity"
+            android:name=".activity.WelcomeActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity android:name=".activity.HomeActivity" />
         <activity android:name=".activity.SettingActivity" />
