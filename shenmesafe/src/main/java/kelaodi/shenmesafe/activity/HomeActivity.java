@@ -44,7 +44,6 @@ import static java.lang.String.valueOf;
  * Created by Administrator on 2015/4/18.
  */
 public class HomeActivity extends Activity {
-    private GridView gv_home;
     private HomeActivity homeActivity;
     private Context context = this;
     private SharedPreferences sp;
@@ -55,7 +54,6 @@ public class HomeActivity extends Activity {
     private boolean Isempty, Isopentest;
     private TVonAnimation tVonAnimation = new TVonAnimation();
     private int fromwhere;
-    private Bundle bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +73,13 @@ public class HomeActivity extends Activity {
     }
 
     private void initView() {
-        bd = this.getIntent().getExtras();
+        Bundle bd = this.getIntent().getExtras();
         fromwhere = bd.getInt("fromwhere");
         linearlayout_home = findViewById(R.id.linearlayout_home);
         if (fromwhere == constant.ONLY) {
             linearlayout_home.setAnimation(tVonAnimation);
         }
-        gv_home = (GridView) findViewById(R.id.gv_home);
+        GridView gv_home = (GridView) findViewById(R.id.gv_home);
         inflate = LayoutInflater.from(HomeActivity.this);
         sp = context.getSharedPreferences("config", MODE_PRIVATE);
         existing_password = sp.getString("password", "");
@@ -179,7 +177,7 @@ public class HomeActivity extends Activity {
                         existing_password = sp.getString("password", "");
                         Isempty = TextUtils.isEmpty(existing_password);
                         Isopentest = sp.getBoolean("opentest", true);
-                        Intent intent=new Intent(HomeActivity.this,SettingActivity.class);
+                        Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                         startActivity(intent);
                     } else if (!password_first.equals(password_second)) {
                         Toast.makeText(context, "您两次输入的密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
