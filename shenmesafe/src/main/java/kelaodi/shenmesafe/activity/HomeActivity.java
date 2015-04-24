@@ -53,7 +53,9 @@ public class HomeActivity extends Activity {
     private String password_first, password_second, single_only, existing_password;
     private View doublepassword, singlepassword, linearlayout_home;
     private boolean Isempty, Isopentest;
-    private TVonAnimation tVonAnimation=new TVonAnimation();
+    private TVonAnimation tVonAnimation = new TVonAnimation();
+    private int fromwhere;
+    private Bundle bd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,6 @@ public class HomeActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         initView();
-
-
 
 
     }
@@ -75,10 +75,10 @@ public class HomeActivity extends Activity {
     }
 
     private void initView() {
-        Bundle bd = getIntent().getExtras();
+        bd = this.getIntent().getExtras();
+        fromwhere = bd.getInt("fromwhere");
         linearlayout_home = findViewById(R.id.linearlayout_home);
-        int fromwhere = bd.getInt("fromwhere");
-        if (fromwhere== constant.ONLY){
+        if (fromwhere == constant.ONLY) {
             linearlayout_home.setAnimation(tVonAnimation);
         }
         gv_home = (GridView) findViewById(R.id.gv_home);
@@ -179,6 +179,8 @@ public class HomeActivity extends Activity {
                         existing_password = sp.getString("password", "");
                         Isempty = TextUtils.isEmpty(existing_password);
                         Isopentest = sp.getBoolean("opentest", true);
+                        Intent intent=new Intent(HomeActivity.this,SettingActivity.class);
+                        startActivity(intent);
                     } else if (!password_first.equals(password_second)) {
                         Toast.makeText(context, "您两次输入的密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                     } else if (password_first.length() < 6 || password_second.length() < 6) {

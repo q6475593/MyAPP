@@ -123,6 +123,7 @@ public class WelcomeActivity extends Activity {
                         Intent intent = new Intent(WelcomeActivity.this, HomeActivity.class);
                         Bundle bd = new Bundle();
                         bd.putInt("fromwhere", constant.ONLY);
+                        intent.putExtras(bd);
                         startActivity(intent);
                         finish();
                     }
