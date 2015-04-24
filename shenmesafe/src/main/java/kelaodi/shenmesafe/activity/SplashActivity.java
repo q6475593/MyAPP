@@ -21,11 +21,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +37,6 @@ import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.domain.UpdateInfo;
 import kelaodi.shenmesafe.engine.UpdateInfoParser;
-import kelaodi.shenmesafe.ui.LeftOutRightIn;
 import kelaodi.shenmesafe.ui.TVoffAnimation;
 import kelaodi.shenmesafe.ui.TVonAnimation;
 import kelaodi.shenmesafe.utils.DownLoadUtil;
@@ -56,10 +52,6 @@ public class SplashActivity extends Activity {
     private ProgressDialog progressDialog;//下载进度的对话框
     private TVoffAnimation tvoffAnimation = new TVoffAnimation();
     private TVonAnimation tvonAnimation = new TVonAnimation();
-
-
-
-
     private SharedPreferences sp;
     private Handler handler = new Handler() {
         @Override
@@ -246,8 +238,6 @@ public class SplashActivity extends Activity {
                             e.printStackTrace();
                         }
                     }
-
-
                 }
             }
             handler.sendMessage(msg);
@@ -265,15 +255,16 @@ public class SplashActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+
                 if (!sp.getBoolean("Issetup", false)) {
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("Issetup", true);
-                    editor.commit();
                     Intent intent = new Intent(SplashActivity.this, SetupOneActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
+                } else {//测试关闭
                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                    Bundle bd = new Bundle();
+                    bd.putInt("fromwhere", constant.ONLY);
+                    intent.putExtras(bd);
                     startActivity(intent);
                     finish();
                 }

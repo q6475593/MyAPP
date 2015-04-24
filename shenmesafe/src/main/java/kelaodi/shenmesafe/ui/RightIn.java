@@ -8,7 +8,7 @@ import android.view.animation.Transformation;
 /**
  * Created by Administrator on 2015/4/24.
  */
-public class RightOutLeftIn extends Animation {
+public class RightIn extends Animation {
     int Width, Height;
 
     @Override
@@ -25,9 +25,11 @@ public class RightOutLeftIn extends Animation {
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         super.applyTransformation(interpolatedTime, t);
-
+        //图片原来在屏幕右侧，进入。
         final Matrix matrix = t.getMatrix();
+        matrix.preTranslate(Width, 0);
+        matrix.setTranslate(-interpolatedTime * Width, 0);
 
-        matrix.setTranslate(-Width, 0);
+
     }
 }

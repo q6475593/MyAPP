@@ -33,6 +33,8 @@ import java.util.List;
 
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.adapter.HomeAdapter;
+import kelaodi.shenmesafe.constant.constant;
+import kelaodi.shenmesafe.ui.TVonAnimation;
 import kelaodi.shenmesafe.utils.MD5;
 
 import static java.lang.String.valueOf;
@@ -49,8 +51,9 @@ public class HomeActivity extends Activity {
     private LayoutInflater inflate;
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
     private String password_first, password_second, single_only, existing_password;
-    private View doublepassword, singlepassword;
+    private View doublepassword, singlepassword, linearlayout_home;
     private boolean Isempty, Isopentest;
+    private TVonAnimation tVonAnimation=new TVonAnimation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,10 @@ public class HomeActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         initView();
+
+
+
+
     }
 
     @Override
@@ -68,6 +75,12 @@ public class HomeActivity extends Activity {
     }
 
     private void initView() {
+        Bundle bd = getIntent().getExtras();
+        linearlayout_home = findViewById(R.id.linearlayout_home);
+        int fromwhere = bd.getInt("fromwhere");
+        if (fromwhere== constant.ONLY){
+            linearlayout_home.setAnimation(tVonAnimation);
+        }
         gv_home = (GridView) findViewById(R.id.gv_home);
         inflate = LayoutInflater.from(HomeActivity.this);
         sp = context.getSharedPreferences("config", MODE_PRIVATE);
