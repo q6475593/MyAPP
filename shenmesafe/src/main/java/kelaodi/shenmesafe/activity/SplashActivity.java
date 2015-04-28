@@ -250,6 +250,7 @@ public class SplashActivity extends Activity {
     private void loadMainUI() {
         tvoffAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
+
             public void onAnimationStart(Animation animation) {
             }
 

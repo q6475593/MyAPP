@@ -13,31 +13,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-
-import org.apache.commons.logging.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import kelaodi.shenmesafe.R;
 import kelaodi.shenmesafe.adapter.HomeAdapter;
 import kelaodi.shenmesafe.constant.constant;
 import kelaodi.shenmesafe.ui.TVonAnimation;
 import kelaodi.shenmesafe.utils.MD5;
-
-import static java.lang.String.valueOf;
 
 
 /**
@@ -94,12 +84,12 @@ public class HomeActivity extends Activity {
                     case 0:
                         if (Isopentest) {//打开
                             if (!Isempty) {
-                                dialogsingle(LostFindActivity.class);
+                                dialogsingle(TabActivityLostAndFind.class);
                             } else if (Isempty) {
                                 dialogdouble();
                             }
                         } else if (!Isopentest) {
-                            intent(LostFindActivity.class);
+                            intent(TabActivityLostAndFind.class);
                         }
                         break;
                     case 8:

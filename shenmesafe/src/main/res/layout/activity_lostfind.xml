@@ -12,4 +12,31 @@
         android:text="手机防盗"
         android:textSize="24sp"
         android:textColor="#EBC950"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/bind_bg_selector"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:id="@+id/lockSIM"
+        android:gravity="center"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="绑定SIM卡"
+            android:textSize="26sp"
+            android:paddingRight="20dp"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/unlock"
+            android:layout_marginRight="20dp"
+            android:id="@+id/lock"/>
+    </RelativeLayout>
 </LinearLayout>
