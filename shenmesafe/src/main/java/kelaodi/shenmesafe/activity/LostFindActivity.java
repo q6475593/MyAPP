@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,12 +39,12 @@ public class LostFindActivity extends Activity {
         initDate();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        initView();
-        initDate();
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        initView();
+//        initDate();
+//    }
 
     private void initDate() {
         String sim = sp.getString("sim", "");
@@ -67,12 +68,14 @@ public class LostFindActivity extends Activity {
                 String sim = sp.getString("sim", "");
                 if (TextUtils.isEmpty(sim)) {
                     editor.putString("sim", simnumber);
+                    Log.i("我的电话串号", simnumber);
                     editor.commit();
                     lock.setImageResource(R.drawable.lock);
                 } else {
                     editor = sp.edit();
                     editor.putString("sim", "");
                     editor.commit();
+                    Log.i("我的电话串号2", simnumber);
                     lock.setImageResource(R.drawable.unlock);
                 }
             }
