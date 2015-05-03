@@ -1,0 +1,27 @@
+<!--
+  ~ 版权所有，翻版必究
+  ~ 作者：王玉琨
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:id="@+id/linearlayout_home">
+
+    <TextView
+        android:background="#355E9E"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text="选择联系人"
+        android:textSize="24sp"
+        android:textColor="#EBC950"/>
+
+
+    <ListView
+        android:id="@+id/lv_contact"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

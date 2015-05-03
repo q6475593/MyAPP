@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class TabActivityLostAndFind extends TabActivity {
     private List<View> mlist = new ArrayList<>();
     private Context context = this;
     private View view1, view2, view3, view4;
+    private String phone = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,14 @@ public class TabActivityLostAndFind extends TabActivity {
         initviewpager();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     private void initviewpager() {
         view1 = LayoutInflater.from(this).inflate(R.layout.activity_lostfind, null);
-        view2 = LayoutInflater.from(this).inflate(R.layout.activity_setup_two, null);
+        view2 = LayoutInflater.from(this).inflate(R.layout.activity_contacts, null);
         view3 = LayoutInflater.from(this).inflate(R.layout.activity_setup_three, null);
         view4 = LayoutInflater.from(this).inflate(R.layout.activity_setup_four, null);
         mlist.add(view1);
@@ -56,7 +63,7 @@ public class TabActivityLostAndFind extends TabActivity {
         mlist.add(view3);
         mlist.add(view4);
         viewPager = (ViewPager) findViewById(R.id.itemViewPager);
-        Myviewpager myviewpager = new Myviewpager(mlist, context);
+        Myviewpager myviewpager = new Myviewpager(mlist, context, phone);
         viewPager.setAdapter(myviewpager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -107,10 +114,12 @@ public class TabActivityLostAndFind extends TabActivity {
         private View lockSIM;
         private ImageView lock;
         private TelephonyManager tm;
+        private String phone;
 
-        public Myviewpager(List<View> mlist, Context context) {
+        public Myviewpager(List<View> mlist, Context context, String phone) {
             this.mlist = mlist;
             this.context = context;
+            this.phone = phone;
         }
 
         @Override
@@ -124,11 +133,21 @@ public class TabActivityLostAndFind extends TabActivity {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {//Log.i("电话回来",phone);
             sp = getSharedPreferences("config", MODE_PRIVATE);
-            if (position == 1) {
-                initView(container);
-                initDate(container);
+            switch (position) {
+                case 1:
+                    initView1(view1);
+                    break;
+                case 2:
+                    selectcontact2(view2);
+                    break;
             }
             View v = mlist.get(position);
             container.addView(v);
@@ -137,44 +156,65 @@ public class TabActivityLostAndFind extends TabActivity {
 
         }
 
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        private void initDate(ViewGroup container) {
-            String sim = sp.getString("sim", "");
-            if (TextUtils.isEmpty(sim)) {
+        private void initView1(View view1) {
+            tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+            lock = (ImageView) view1.findViewById(R.id.lock);
+            String simlock = sp.getString("sim", "");
+            if (TextUtils.isEmpty(simlock)) {
                 lock.setImageResource(R.drawable.unlock);
-            } else {
+            } else if (!TextUtils.isEmpty(simlock)) {
                 lock.setImageResource(R.drawable.lock);
             }
-        }
-
-        private void initView(ViewGroup container) {
-            tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-            lock = (ImageView) container.findViewById(R.id.lock);
-            lockSIM = container.findViewById(R.id.lockSIM);
-            final String simnumber = tm.getSimSerialNumber();
+            lockSIM = view1.findViewById(R.id.lockSIM);
             lockSIM.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String simnumber = tm.getSimSerialNumber();
                     SharedPreferences.Editor editor = sp.edit();
                     String sim = sp.getString("sim", "");
                     if (TextUtils.isEmpty(sim)) {
                         editor.putString("sim", simnumber);
-                        Log.i("我的电话串号", simnumber);
-                        editor.commit();
+                        editor.apply();
                         lock.setImageResource(R.drawable.lock);
-                    } else {
-                        editor = sp.edit();
+                    } else if (!TextUtils.isEmpty(sim)) {
                         editor.putString("sim", "");
-                        editor.commit();
-                        Log.i("我的电话串号2", simnumber);
+                        editor.apply();
                         lock.setImageResource(R.drawable.unlock);
                     }
                 }
             });
+        }
+
+        private void selectcontact2(View view2) {
+            TextView selectcontacts = (TextView) view2.findViewById(R.id.selectcontacts);
+            EditText EditText_contacts = (EditText) view2.findViewById(R.id.EditText_contacts);
+            selectcontacts.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForResult(new Intent(TabActivityLostAndFind.this,
+                            SelectContactActivity.class), 0);
+                }
+            });
+            if (phone != null) {
+                EditText_contacts.setText(phone);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            phone = data.getStringExtra("phone");
+//            TextView selectcontacts = (TextView) view2.findViewById(R.id.selectcontacts);
+            EditText EditText_contacts = (EditText) view2.findViewById(R.id.EditText_contacts);
+            EditText_contacts.setText(phone);
+
+
+
+
+
+
         }
     }
 
@@ -195,7 +235,7 @@ public class TabActivityLostAndFind extends TabActivity {
                         String newname = et.getText().toString().trim();
                         SharedPreferences.Editor editor = sp.edit();
                         editor.putString("newname", newname);
-                        editor.commit();
+                        editor.apply();
                     }
                 });
                 builder.show();

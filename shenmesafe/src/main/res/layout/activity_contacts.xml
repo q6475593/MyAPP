@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    >
+
+
+    <TextView
+        android:background="#355E9E"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text="设置安全号码"
+        android:textSize="24sp"
+        android:textColor="#EBC950"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="请选择或输入安全号码"
+        android:textSize="26sp"
+        android:id="@+id/EditText_contacts"
+        android:background="@drawable/edittext_bg"
+        android:paddingLeft="1dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取联系人"
+        android:textSize="26sp"
+        android:orientation="horizontal"
+        android:background="@drawable/bind_bg_selector"
+        android:id="@+id/selectcontacts"
+        android:gravity="center"
+        android:clickable="true"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg1_selector"
+        android:text="确定"
+        android:textColor="@color/material_blue_grey_900"
+        android:layout_gravity="center_horizontal"
+
+        />
+
+</LinearLayout>
