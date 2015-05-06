@@ -34,8 +34,8 @@ import kelaodi.shenmesafe.utils.MD5;
  * Created by Administrator on 2015/4/18.
  */
 public class HomeActivity extends Activity {
-    private HomeActivity   homeActivity;
-    private Context context =              this;
+    private HomeActivity homeActivity;
+    private Context context = this;
     private SharedPreferences sp;
     private LayoutInflater inflate;
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
@@ -165,7 +165,7 @@ public class HomeActivity extends Activity {
                         editor.commit();
                         Toast.makeText(context, "已成功保存密码，请牢记密码" + password_second, Toast.LENGTH_SHORT).show();
                         existing_password = sp.getString("password", "");
-                         Isempty = TextUtils.isEmpty(existing_password);
+                        Isempty = TextUtils.isEmpty(existing_password);
                         Isopentest = sp.getBoolean("opentest", true);
                         Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
                         startActivity(intent);
