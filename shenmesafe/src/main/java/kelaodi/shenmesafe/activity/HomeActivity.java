@@ -34,8 +34,8 @@ import kelaodi.shenmesafe.utils.MD5;
  * Created by Administrator on 2015/4/18.
  */
 public class HomeActivity extends Activity {
-    private HomeActivity homeActivity;
-    private Context context = this;
+    private HomeActivity   homeActivity;
+    private Context context =              this;
     private SharedPreferences sp;
     private LayoutInflater inflate;
     private EditText et_home_password_first, et_home_password_second, et_home_password_only;
