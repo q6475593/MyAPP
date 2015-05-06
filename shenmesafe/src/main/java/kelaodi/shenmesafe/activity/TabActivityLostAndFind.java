@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
@@ -17,13 +19,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import kelaodi.shenmesafe.R;
 
@@ -38,14 +45,24 @@ public class TabActivityLostAndFind extends TabActivity {
     private Context context = this;
     private View view1, view2, view3, view4;
     private String phone = "";
+    private String outsafenumber = "";
+    private ProgressBar pb_tablostandfind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tablostandfind);
-        m_tabHost = getTabHost();
+        initview();
         inittab();
         initviewpager();
+    }
+
+    private void initview() {
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        outsafenumber = sp.getString("safenumber", "");
+        pb_tablostandfind = (ProgressBar) findViewById(R.id.pb_tablostandfind);
+        pb_tablostandfind.setVisibility(View.GONE);
+        m_tabHost = getTabHost();
     }
 
     @Override
@@ -63,7 +80,7 @@ public class TabActivityLostAndFind extends TabActivity {
         mlist.add(view3);
         mlist.add(view4);
         viewPager = (ViewPager) findViewById(R.id.itemViewPager);
-        Myviewpager myviewpager = new Myviewpager(mlist, context, phone);
+        Myviewpager myviewpager = new Myviewpager(mlist, context, phone, outsafenumber, sp, pb_tablostandfind);
         viewPager.setAdapter(myviewpager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -110,16 +127,23 @@ public class TabActivityLostAndFind extends TabActivity {
     public class Myviewpager extends PagerAdapter {
         private List<View> mlist;
         private Context context;
-        private SharedPreferences sp;
         private View lockSIM;
         private ImageView lock;
         private TelephonyManager tm;
         private String phone;
+        private String outsafenumber;
+        private SharedPreferences sp;
+        private ProgressBar pb_tablostandfind;
+        private Thread mthread;
 
-        public Myviewpager(List<View> mlist, Context context, String phone) {
+        public Myviewpager(List<View> mlist, Context context, String phone, String outsafenumber,
+                           SharedPreferences sp, ProgressBar pb_tablostandfind) {
             this.mlist = mlist;
             this.context = context;
             this.phone = phone;
+            this.outsafenumber = outsafenumber;
+            this.sp = sp;
+            this.pb_tablostandfind = pb_tablostandfind;
         }
 
         @Override
@@ -140,7 +164,6 @@ public class TabActivityLostAndFind extends TabActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {//Log.i("电话回来",phone);
-            sp = getSharedPreferences("config", MODE_PRIVATE);
             switch (position) {
                 case 1:
                     initView1(view1);
@@ -187,18 +210,98 @@ public class TabActivityLostAndFind extends TabActivity {
 
         private void selectcontact2(View view2) {
             TextView selectcontacts = (TextView) view2.findViewById(R.id.selectcontacts);
-            EditText EditText_contacts = (EditText) view2.findViewById(R.id.EditText_contacts);
+            final EditText EditText_contacts = (EditText) view2.findViewById(R.id.EditText_contacts);
+            Button button_contact = (Button) view2.findViewById(R.id.button_contact);
             selectcontacts.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivityForResult(new Intent(TabActivityLostAndFind.this,
-                            SelectContactActivity.class), 0);
+
+                    pb_tablostandfind.setVisibility(View.VISIBLE);
+
+
+
+                    if (mthread==null){
+                        mthread=new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityForResult(new Intent(TabActivityLostAndFind.this,
+                                        SelectContactActivity.class), 0);
+                            }
+                        });
+                        mthread.start();
+                        handler.obtainMessage(0);
+                        mthread=null;
+                    }
+
+
+
+
+
+
+
+
+
+
+
                 }
             });
             if (phone != null) {
                 EditText_contacts.setText(phone);
             }
+            if (outsafenumber != null) {
+                EditText_contacts.setText(outsafenumber);
+            }
+            button_contact.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Pattern telRegex = Pattern.compile("[1][358]\\d{9}");
+                    String safenumber = EditText_contacts.getText().toString().trim();
+                    Matcher Matchersafenumber = telRegex.matcher(safenumber);
+                    if (safenumber == null) {
+                        Toast.makeText(context, safenumber + "安全号码不能为空", Toast.LENGTH_SHORT).show();
+                    } else if (!Matchersafenumber.matches()) {
+                        Toast.makeText(context, safenumber + "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                    } else if (Matchersafenumber.matches()) {
+                        Toast.makeText(context, safenumber + "您已经设置了安全号码",
+                                Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("safenumber", safenumber);
+                        editor.apply();
+                    }
+                }
+            });
         }
+
+
+
+
+        private Handler handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 0:
+
+                        pb_tablostandfind.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override
@@ -206,16 +309,9 @@ public class TabActivityLostAndFind extends TabActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             phone = data.getStringExtra("phone");
-//            TextView selectcontacts = (TextView) view2.findViewById(R.id.selectcontacts);
             EditText EditText_contacts = (EditText) view2.findViewById(R.id.EditText_contacts);
             EditText_contacts.setText(phone);
-
-
-
-
-
-
-        }
+        }pb_tablostandfind.setVisibility(View.GONE);
     }
 
     @Override

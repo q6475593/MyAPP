@@ -34,7 +34,8 @@
         <activity android:name=".activity.Lost2"/>
         <activity android:name=".activity.Lost3"/>
         <activity android:name=".activity.Lost4"/>
-        <activity android:name=".activity.SelectContactActivity"/>
+        <activity android:name=".activity.SelectContactActivity"
+            android:theme="@style/prestrainactivity"/>
 
         <receiver android:name=".receiver.OutCallReceiver">
             <intent-filter android:priority="1000">

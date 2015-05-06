@@ -30,4 +30,13 @@
 
     </RelativeLayout>
 
+    <ProgressBar
+        android:id="@+id/pb_tablostandfind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:max="100"
+        android:progress="0"
+        android:visibility="gone"
+        style="@android:style/Widget.ProgressBar.Large"/>
 </TabHost>
